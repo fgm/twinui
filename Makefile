@@ -1,0 +1,3 @@
+lint:
+	golint -min_confidence=0.3 ./... && golangci-lint run ./...
+

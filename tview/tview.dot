@@ -1,0 +1,78 @@
+digraph tview {
+    rankdir=RL;
+
+    graph [ color=transparent ];
+
+    node [ shape=none ];
+        MouseAction;
+
+    node [ shape=rect ];
+        Application
+        Box
+        Button
+        Checkbox
+        DropDown
+        Flex
+        Form;
+        Frame;
+        Grid;
+        InputField;
+        List;
+        Pages;
+        Table;
+        TableCell;
+        TextView;
+        Theme;
+        TreeNode;
+        TreeView;
+
+        // Interfaces
+    //    node [ shape=record ];
+    //    Focusable [ label="Focusable|HasFocus()" ];
+    //    FormItem [ label="FormItem|GetLabel|SetFormAttributes|GetFieldWidth|SetFinishedFunc() FormItem" ];
+    //    Primitive [ label="Primitive|Draw|GetRect|SetRect|InputHandler|Focus|Blur|GetFocusable|MouseHandler" ];
+    node [ shape=ellipse ];
+    Focusable;
+    FormItem;
+    Primitive;
+
+    // Implements
+    edge [ color=orange ];
+    Box -> Focusable;
+    Box -> Primitive;
+    Checkbox -> FormItem;
+    DropDown -> FormItem;
+    InputField -> FormItem;
+
+    // Embeds
+    edge [ color=black ];
+    Button -> Box;
+    Checkbox -> Box;
+    DropDown -> Box;
+    Flex -> Box;
+    Form -> Box;
+    Frame -> Box;
+    Grid -> Box;
+    InputField -> Box;
+    List -> Box;
+    Pages -> Box;
+    Table -> Box;
+    TextView -> Box;
+    TreeView -> Box;
+
+    FormItem -> Primitive
+
+    Application;
+    MouseAction;
+    TableCell;
+    Theme;
+    TreeNode;
+
+    // Implicit dependencies.
+    edge [ color=transparent ];
+    TableCell -> Table;
+    TreeNode -> TreeView;
+    Application -> Focusable;
+    Theme -> Primitive;
+
+}
