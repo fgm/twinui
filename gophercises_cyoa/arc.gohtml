@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Choose Your Own Adventure: {{ .Title }}</title>
+  <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+  <section class="page">
+    <h1>{{ .Title }}</h1>
+      {{ range .Story }}
+        <p>{{ . }}</p>
+      {{ end }}
+      {{ if .Options }}
+        <ul>
+            {{ range .Options }}
+              <li><a href="/arc/{{ .ArcName }}">{{ .Text }}</a></li>
+            {{ end }}
+        </ul>
+      {{ end }}
+  </section>
+  <footer>
+    This is a demo of an exercise from the free course <a href="https://gophercises.com">Gophercises</a>. Check it out
+    if you are interested in learning/practicing Go.
+  </footer>
+</body>
+</html>
