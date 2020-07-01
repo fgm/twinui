@@ -1,4 +1,4 @@
-package main
+package ui
 
 import (
 	"fmt"
@@ -6,6 +6,8 @@ import (
 
 	"github.com/gdamore/tcell"
 	"github.com/rivo/tview"
+
+	"github.com/fgm/twinui/model"
 )
 
 // View holds the structure of the application View:
@@ -19,15 +21,15 @@ type View struct {
 	// Grid is the container wrapping the Heading, Body, and Actions.
 	*tview.Grid
 	// Story is the model from which the View reads data.
-	*Story
+	*model.Story
 }
 
 // Handle updates the View from an Arc loaded from the Story by its URL.
-func (v View) Handle(url string) bool {
+func (v View) Handle(url string) {
 	arc := v.Story.Arc(url)
 	if arc ==  nil {
 		log.Printf("Path not found: %s\n", url)
-		return true
+		return
 	}
 	fmt.Fprint(v.Heading.Clear(), arc.Title)
 	b := v.Body.Clear()
@@ -36,7 +38,7 @@ func (v View) Handle(url string) bool {
 	}
 	v.Actions.Clear()
 	if len(arc.Options) == 0 {
-		arc.Options = []Option{{
+		arc.Options = []model.Option{{
 			Label: `Leave story`,
 			URL:   `quit`,
 		}}
@@ -44,7 +46,6 @@ func (v View) Handle(url string) bool {
 	for k, item := range arc.Options {
 		v.Actions.InsertItem(k, item.Label, item.URL, rune('a' + k), nil)
 	}
-	return true
 }
 
 // URLFromKey resolves a key event to an Arc URL if possible.
@@ -91,7 +92,7 @@ func list(title string) *tview.List {
 }
 
 // NewView builds an initialized full-screen View.
-func NewView(story *Story) *View {
+func NewView(story *model.Story) *View {
 	v := &View{
 		Heading: textView("Scene"),
 		Body:    textView("Description").SetScrollable(true),

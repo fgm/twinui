@@ -8,13 +8,13 @@
 <body>
   <section class="page">
     <h1>{{ .Title }}</h1>
-      {{ range .Story }}
+      {{ range .Body }}
         <p>{{ . }}</p>
       {{ end }}
       {{ if .Options }}
         <ul>
             {{ range .Options }}
-              <li><a href="/arc/{{ .ArcName }}">{{ .Text }}</a></li>
+              <li><a href="/arc/{{ .URL }}">{{ .Label }}</a></li>
             {{ end }}
         </ul>
       {{ end }}

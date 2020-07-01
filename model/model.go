@@ -1,4 +1,4 @@
-package main
+package model
 
 import (
 	"encoding/json"
@@ -22,6 +22,14 @@ type Arc struct {
 // Story is the graph of arcs.
 // No Mutex: we never write after read is done.
 type Story map[string]Arc
+
+// Close implements io.Closer for idiomaticity, although it is not needed here.
+func (s *Story) Close() error {
+	for k := range *s {
+		delete(*s, k)
+	}
+	return nil
+}
 
 // Load fetches the story data from disk.
 func (s *Story) Load(path string) error {
