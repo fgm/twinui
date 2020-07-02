@@ -1,5 +1,5 @@
 digraph tview {
-    rankdir=RL;
+    rankdir=BT;
 
     graph [ color=transparent ];
 

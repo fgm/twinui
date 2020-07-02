@@ -1,0 +1,47 @@
+graph tview_deps {
+    rankdir = TB;
+
+    node [ shape="octagon" ];
+    tview [ label="rivo/tview" ];
+
+    node [ shape="rect" ];
+    colorful [label = "lucasb-eyer/go-colorful\nCouleurs"];
+    tcell [ label=< <B>gdamore/tcell</B> <br/>Plein écran>, fontcolor=green, fillcolor=black, style=filled,  ];
+    encoding [ label="gdamore/encoding\nNon-Unicode encodings" ];
+
+    node [ fillcolor="#5455FE", fontcolor="white" style="filled"]; // Unicode blue
+    uniseg [ label=< <B>rivo/uniseg</B><br/>Segmentation Unicode> ];
+    runewidth [ label=<<B>mattn/go-runewidth</B>  <br/>Métriques Unicode> ];
+
+    node [ fillcolor="#00ADD8", fontcolor="#fddd00" style="filled" ]; // Gopher blue
+    sys [ label=< <B>x/sys</B> > ];
+    text [ label=< <B>x/text </B> > ];
+
+    tcell -- encoding;
+    tcell -- colorful;
+    tcell -- runewidth;
+    tcell -- sys;
+    tcell -- text;
+
+    tview -- tcell;
+    tview -- colorful
+    tview -- runewidth [ label="" ];
+    tview -- uniseg [ label="" ];
+
+    subgraph cluster_go {
+        color=none;
+
+        sys;
+        text;
+    }
+
+    subgraph cluster_unicode {
+        rank = same;
+        color=none;
+
+        runewidth
+        uniseg
+    }
+
+
+}
