@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gdamore/tcell"
+	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 
 	"github.com/fgm/twinui/model"
@@ -15,7 +15,7 @@ type View struct {
 	// Heading is the top line.
 	Heading *tview.TextView
 	// Body is the main frame.
-	Body    *tview.TextView
+	Body *tview.TextView
 	// Actions contains the action menu.
 	Actions *tview.List
 	// Grid is the container wrapping the Heading, Body, and Actions.
@@ -27,14 +27,14 @@ type View struct {
 // Handle updates the View from an Arc loaded from the Story by its URL.
 func (v View) Handle(url string) {
 	arc := v.Story.Arc(url)
-	if arc ==  nil {
+	if arc == nil {
 		log.Printf("Path not found: %s\n", url)
 		return
 	}
 	fmt.Fprint(v.Heading.Clear(), arc.Title)
 	b := v.Body.Clear()
 	for _, row := range arc.Body {
-		fmt.Fprintln(b, row + "\n")
+		fmt.Fprintln(b, row+"\n")
 	}
 	v.Actions.Clear()
 	if len(arc.Options) == 0 {
@@ -44,7 +44,7 @@ func (v View) Handle(url string) {
 		}}
 	}
 	for k, item := range arc.Options {
-		v.Actions.InsertItem(k, item.Label, item.URL, rune('a' + k), nil)
+		v.Actions.InsertItem(k, item.Label, item.URL, rune('a'+k), nil)
 	}
 }
 
@@ -101,7 +101,7 @@ func NewView(story *model.Story) *View {
 		Story:   story,
 	}
 	v.Grid.
-		SetRows(3, 0, 5). // 1-row title, 3-row actions. Add 2 for their own borders.
+		SetRows(3, 0, 5).  // 1-row title, 3-row actions. Add 2 for their own borders.
 		SetBorders(false). // Use the view borders instead.
 		AddItem(v.Heading, 0, 0, 1, 1, 0, 0, false).
 		AddItem(v.Body, 1, 0, 1, 1, 0, 0, false).
